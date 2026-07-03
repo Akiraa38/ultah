@@ -1,0 +1,77 @@
+ <!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Game Time 🎮</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background: linear-gradient(135deg, #fff0f5 0%, #ffdee9 100%); 
+            font-family: 'Segoe UI', sans-serif; min-height: 100vh;
+            display: flex; justify-content: center; align-items: center; overflow: hidden; position: relative; padding: 20px;
+        }
+        .heart-fall { position: absolute; top: -20px; color: #ff69b4; animation: fall linear infinite; pointer-events: none; z-index: 1; }
+        @keyframes fall { to { transform: translateY(105vh) rotate(360deg); } }
+        
+        .card { 
+            background: rgba(255, 255, 255, 0.95); padding: 40px 30px; border-radius: 30px; 
+            box-shadow: 0 20px 40px rgba(255, 105, 180, 0.15); max-width: 450px; width: 100%; text-align: center;
+            border: 1px solid rgba(255, 182, 193, 0.5); animation: float 4s ease-in-out infinite; z-index: 10;
+        }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        
+        .game-icon { font-size: 50px; margin-bottom: 15px; }
+        h1 { color: #ff477e; font-size: 2.2rem; margin-bottom: 10px; }
+        .subtitle { color: #ff758f; font-size: 1rem; margin-bottom: 25px; line-height: 1.5; }
+        .question { color: #ff1f5a; font-size: 1.3rem; font-weight: 700; margin-bottom: 20px; }
+        
+        .btn-opt { 
+            display: block; width: 100%; padding: 15px; margin: 12px 0; background: rgba(255, 255, 255, 0.8);
+            color: #ff477e; border: 2px solid #ffb3c1; border-radius: 20px; cursor: pointer; font-size: 1rem;
+            font-weight: 600; transition: all 0.2s ease;
+        }
+        .btn-opt:hover { background: #ff477e; color: white; transform: scale(1.02); }
+        .notice { color: #ff0055; margin-top: 15px; font-weight: bold; min-height: 24px; }
+    </style>
+</head>
+<body>
+   <audio id="bgMusic" src="musik.mp3" loop></audio>
+
+    <div class="card">
+        <div class="game-icon">🎮</div>
+        <h1>Mini Game Time ✨</h1>
+        <p class="subtitle">Sebelum lanjut, jawab beberapa pertanyaan dulu ya Clara 😆</p>
+        <p class="question">Siapa yang ulang tahun hari ini? 🎂</p>
+        
+        <button class="btn-opt" onclick="salah()">🦇 Batman</button>
+        <button class="btn-opt" onclick="benar()">🎀 Clara</button>
+        <button class="btn-opt" onclick="salah()">🐱 Kucing Clara</button>
+        
+        <div id="feedback" class="notice"></div>
+    </div>
+
+    <script>
+        const audio = document.getElementById('bgMusic');
+        window.addEventListener('DOMContentLoaded', () => {
+            audio.currentTime = localStorage.getItem('musicTime') || 0;
+            audio.play();
+        });
+        setInterval(() => { localStorage.setItem('musicTime', audio.currentTime); }, 500);
+
+        function salah() { document.getElementById('feedback').innerText = "Ngaco! Salah penuuuh, coba lagi! 😜"; }
+        function benar() { 
+            document.getElementById('feedback').style.color = '#2e7d32';
+            document.getElementById('feedback').innerText = "Yesss bener banget! Lanjut! ✨"; 
+            setTimeout(() => { window.location.href = 'game2.html'; }, 1000);
+        }
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-fall'); heart.innerHTML = '💖';
+            heart.style.left = Math.random() * 100 + 'vw'; heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            document.body.appendChild(heart); setTimeout(() => { heart.remove(); }, 5000);
+        }
+        setInterval(createHeart, 300);
+    </script>
+</body>
+</html>

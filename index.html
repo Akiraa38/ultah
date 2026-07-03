@@ -1,0 +1,68 @@
+ <!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hey Clara ✨</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background: linear-gradient(135deg, #fff0f5 0%, #ffdee9 100%); 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            min-height: 100vh; display: flex; justify-content: center; align-items: center;
+            overflow: hidden; position: relative; padding: 20px;
+        }
+        .heart-fall { position: absolute; top: -20px; color: #ff69b4; animation: fall linear infinite; pointer-events: none; z-index: 1; }
+        @keyframes fall { to { transform: translateY(105vh) rotate(360deg); } }
+        
+        .card { 
+            background: rgba(255, 255, 255, 0.95); padding: 50px 30px; border-radius: 30px; 
+            box-shadow: 0 20px 40px rgba(255, 105, 180, 0.15); max-width: 450px; width: 100%; text-align: center;
+            border: 1px solid rgba(255, 182, 193, 0.5); animation: float 4s ease-in-out infinite; z-index: 10;
+        }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+        
+        .cake-icon { font-size: 60px; margin-bottom: 20px; }
+        h1 { color: #ff477e; font-size: 2.5rem; margin-bottom: 15px; font-weight: 700; }
+        p { color: #ff758f; font-size: 1.1rem; line-height: 1.6; margin-bottom: 30px; }
+        
+        .btn-main { 
+            display: block; width: 100%; padding: 16px; background: #ff477e; 
+            color: white; border: none; border-radius: 50px; cursor: pointer; font-size: 1.1rem; 
+            font-weight: 600; transition: all 0.3s ease; box-shadow: 0 8px 15px rgba(255, 71, 126, 0.3);
+        }
+        .btn-main:hover { background: #ff1f5a; transform: translateY(-2px); box-shadow: 0 12px 20px rgba(255, 71, 126, 0.5); }
+        .footer-text { margin-top: 20px; color: #ffb3c1; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <!-- Ganti URL musik di bawah ini dengan lagu pilihanmu (.mp3) -->
+    <audio id="bgMusic" src="musik.mp3" loop></audio>
+
+    <div class="card">
+        <div class="cake-icon">🎂</div>
+        <h1>Hey Clara ✨</h1>
+        <p>Ada sesuatu kecil yang aku siapin buat kamu. Mungkin nggak seberapa, tapi semoga bisa bikin kamu senyum hari ini.</p>
+        <button class="btn-main" onclick="startJourney()">💖 Mulai Perjalanan</button>
+        <div class="footer-text">A little surprise just for you 🌸</div>
+    </div>
+
+    <script>
+        const audio = document.getElementById('bgMusic');
+        function startJourney() {
+            audio.play().then(() => {
+                localStorage.setItem('musicTime', audio.currentTime);
+                window.location.href = 'game1.html';
+            });
+        }
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-fall'); heart.innerHTML = ['❤️','💖','💕'][Math.floor(Math.random()*3)];
+            heart.style.left = Math.random() * 100 + 'vw'; heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            heart.style.fontSize = Math.random() * 15 + 15 + 'px';
+            document.body.appendChild(heart); setTimeout(() => { heart.remove(); }, 5000);
+        }
+        setInterval(createHeart, 300);
+    </script>
+</body>
+</html>

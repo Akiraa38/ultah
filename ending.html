@@ -1,0 +1,78 @@
+ <!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Clara!</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background: linear-gradient(135deg, #fff0f5 0%, #ffdee9 100%); 
+            font-family: 'Segoe UI', sans-serif; min-height: 100vh;
+            display: flex; justify-content: center; align-items: center; overflow-y: auto; position: relative; padding: 40px 20px;
+        }
+        .heart-fall { position: absolute; top: -20px; color: #ff477e; animation: fall linear infinite; pointer-events: none; z-index: 1; }
+        @keyframes fall { to { transform: translateY(105vh) rotate(360deg); } }
+        
+        .letter-box { 
+            background: rgba(255, 255, 255, 0.97); padding: 45px 30px; max-width: 500px; width: 100%;
+            border-radius: 30px; box-shadow: 0 20px 40px rgba(255, 105, 180, 0.2); border: 2px dashed #ffb3c1; 
+            animation: float 4s ease-in-out infinite; z-index: 10; text-align: center;
+        }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        
+        .envelope-icon { font-size: 55px; margin-bottom: 15px; }
+        h1 { color: #ff477e; margin-bottom: 25px; font-size: 2.2rem; font-weight: 700; }
+        p { line-height: 1.8; color: #ff758f; font-size: 1.05rem; text-align: left; margin-bottom: 20px; text-indent: 20px; font-weight: 500; }
+        .heart-divider { font-size: 30px; color: #ff477e; margin: 25px 0; animation: pulse 1.2s infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+        
+        .btn-back {
+            background: linear-gradient(135deg, #ff758f 0%, #ff477e 100%);
+            color: white; border: none; padding: 16px; font-size: 1.1rem; font-weight: bold;
+            border-radius: 50px; cursor: pointer; transition: all 0.3s ease;
+            box-shadow: 0 6px 15px rgba(255, 71, 126, 0.4); display: block; width: 100%; text-decoration: none;
+        }
+        .btn-back:hover { transform: scale(1.02); filter: brightness(1.05); box-shadow: 0 10px 20px rgba(255, 71, 126, 0.6); }
+    </style>
+</head>
+<body>
+    <audio id="bgMusic" src="musik.mp3" loop></audio>
+
+    <div class="letter-box">
+        <div class="envelope-icon">✉️❤️</div>
+        <h1>Dear Clara 💖</h1>
+        <p>Kalau kamu lagi baca ini, berarti hari spesial itu akhirnya datang juga. Yup... Hari ulang tahun kamu! 🎂✨</p>
+        <p>Mungkin hari ini bakal ada banyak ucapan, banyak notifikasi, banyak doa, dan mungkin juga banyak makanan enak 😆 Tapi di antara semua itu, ada satu orang yang pengen nyisihin sedikit ruang kecil buat bilang...</p>
+        <p>Selamat atas bertambahnya umur, selamat karena berhasil sampai di titik ini, dan selamat karena masih menjadi Clara yang selama ini dikenal banyak orang. Tetap jadi alasan orang lain buat tersenyum ya!</p>
+        
+        <div class="heart-divider">💖💖💖</div>
+        
+        <button class="btn-back" onclick="resetJourney()">
+            Happy Birthday Clara ✨
+        </button>
+    </div>
+
+    <script>
+        const audio = document.getElementById('bgMusic');
+        window.addEventListener('DOMContentLoaded', () => {
+            audio.currentTime = localStorage.getItem('musicTime') || 0;
+            audio.play();
+        });
+        setInterval(() => { localStorage.setItem('musicTime', audio.currentTime); }, 500);
+
+        function resetJourney() {
+            localStorage.setItem('musicTime', 0); // Reset musik ke awal pas balik
+            window.location.href = 'index.html';
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-fall'); heart.innerHTML = '💖';
+            heart.style.left = Math.random() * 100 + 'vw'; heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            document.body.appendChild(heart); setTimeout(() => { heart.remove(); }, 5000);
+        }
+        setInterval(createHeart, 250);
+    </script>
+</body>
+</html>
